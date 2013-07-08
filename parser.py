@@ -50,21 +50,26 @@ class Parser(object):
 
         optional = True if match.group('optional') == 'optional' else False
 
-        self.current_endpoint[scope]['params'][param_name] = {
-            'desc': param_desc, 'optional': optional}
+        self.current_endpoint[scope]['params'].append({'name': param_name,
+            'desc': param_desc, 'optional': optional})
 
     def _new_param_type(self, match):
         scope = self.scope
         params = self.current_endpoint[scope]['params']
         param_name = match.group('param_name').strip()
-        if not (scope and (param_name in params)):
-            raise Exception('invalid param name mentioned.')
 
-        params[param_name]['type'] = match.group('param_type_value')
+        found = None
+        for param in params:
+            if param['name'] == param_name:
+                param['type'] = match.group('param_type_value')
+                found = True
+
+        if not (scope and (found)):
+            raise Exception('invalid param name mentioned.')
 
     def _new_http_request_scope(self, match):
         self.scope = 'request'
-        self.current_endpoint['request'] = {'params': {}}
+        self.current_endpoint['request'] = {'params': []}
 
     def _new_response_status(self, match):
         self.current_endpoint['response']['status'] = {
@@ -72,7 +77,7 @@ class Parser(object):
 
     def _new_http_response_scope(self, match):
         self.scope = 'response'
-        self.current_endpoint['response'] = {'params': {}}
+        self.current_endpoint['response'] = {'params': []}
 
     def _new_http_endpoint_note(self, match):
         if not self.endpoints:
