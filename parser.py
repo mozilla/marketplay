@@ -27,9 +27,18 @@ class Parser(object):
         self.current_endpoint = None
 
     def _new_http_endpoint(self, match):
-        self.endpoints.append({'url': match.group('url'),
+        url = match.group('url')
+        self.endpoints.append({'url': url,
                                'method': match.group('method_name')})
         self.current_endpoint = self.endpoints[len(self.endpoints) - 1]
+
+        args_regex = r'\((?P<arg_type>.+?):(?P<arg_name>.+?)\)'
+        matches = re.findall(args_regex, url)
+        url_args = []
+        for arg_type, arg_name in matches:
+            url_args.append({'name': arg_name, 'type': arg_type})
+
+        self.current_endpoint['url_args'] = url_args
 
     def _new_param(self, match):
         # scope = request | respone
