@@ -8,7 +8,8 @@ rules = [
     ('http_request_scope', r'\*\*Request\*\*'),
     ('http_response_scope', r'\*\*Response\*\*'),
     ('http_endpoint_note', r'\.\. note:: (?P<note_text>.+)'),
-    ('param', r':param (?P<param_name>.+?): (?P<param_desc>.+)'),
+    ('param', r':param (?P<optional>(optional|required) )?' + (
+        r'(?P<param_name>.+?): (?P<param_desc>.+)')),
     ('param_type', r':type (?P<param_name>.+?): (?P<param_type_value>.+)'),
     ('response_status', r':status code:( (?P<code>\d+))?'),
 ]
@@ -33,18 +34,20 @@ class Parser(object):
     def _new_param(self, match):
         # scope = request | respone
         scope = self.scope
-        param_name = match.group('param_name')
+        param_name = match.group('param_name').strip()
         param_desc = match.group('param_desc')
         if not scope:
             raise Exception('Param out of scope.')
 
+        optional = True if match.group('optional') == 'optional' else False
+
         self.current_endpoint[scope]['params'][param_name] = {
-            'desc': param_desc}
+            'desc': param_desc, 'optional': optional}
 
     def _new_param_type(self, match):
         scope = self.scope
         params = self.current_endpoint[scope]['params']
-        param_name = match.group('param_name')
+        param_name = match.group('param_name').strip()
         if not (scope and (param_name in params)):
             raise Exception('invalid param name mentioned.')
 
@@ -63,14 +66,19 @@ class Parser(object):
         self.current_endpoint['response'] = {'params': {}}
 
     def _new_http_endpoint_note(self, match):
+        if not self.endpoints:
+            return
+
         self.current_endpoint['notes'] = match.group('note_text')
 
     def get_json(self):
         return json.dumps(self.endpoints)
 
+    def get_array(self):
+        return self.endpoints
+
     def parse(self):
         string = self.string.lstrip()
-        i = 0
         while string:
             match = None
             for name, regex in rules:
@@ -80,8 +88,9 @@ class Parser(object):
                     string = string[match.end():].strip()
                     break
 
+            # Strip the current line if we could not match.
             if not match:
                 string = re.sub(no_match_line, strip_junk, string,
                                 count=1).lstrip()
 
-        return self
+        return True
