@@ -32,11 +32,24 @@ class Parser(object):
                                'method': match.group('method_name')})
         self.current_endpoint = self.endpoints[len(self.endpoints) - 1]
 
-        args_regex = r'\((?P<arg_type>.+?):(?P<arg_name>.+?)\)'
+        args_regex = r'\/\((.+?)\)\/'
         matches = re.findall(args_regex, url)
         url_args = []
-        for arg_type, arg_name in matches:
-            url_args.append({'name': arg_name, 'type': arg_type})
+        for args in matches:
+            # for multiple args
+            split_matches = args.split('|')
+            arg_regex = r'(?P<arg_type>.+?):(?P<arg_name>.+)'
+            arg_names = []
+            arg_types = []
+
+            for spm in split_matches:
+                secondary_match = re.match(arg_regex, spm.strip('()'))
+                arg_names.append(secondary_match.group('arg_name'))
+                arg_types.append(secondary_match.group('arg_type'))
+
+            args_name = '|'.join(arg_names)
+            url_args.append({'name': args_name,
+                             'type': '|'.join(arg_types)})
 
         self.current_endpoint['url_args'] = url_args
 
