@@ -1,0 +1,57 @@
+<section class="main account" id="account-settings">
+  <header class="secondary-header hide-on-mobile c">
+    <h2 class="linefit">{{ _('Account Settings') }}</h2>
+  </header>
+
+  {% set current_page = 'settings' %}
+  {% include 'settings/nav.html' %}
+
+  <form class="form-grid account-settings"{{ ' novalidate' if not user.logged_in() }}>
+    <div class="simple-field c only-logged-in">
+      <div class="form-label label">
+        <label for="email">{{ _('Email') }}</label>
+      </div>
+      <div class="form-col">
+        <input type="email" name="email" id="email" readonly value="{{ user.get_setting('email') }}">
+      </div>
+    </div>
+
+    <div class="brform simple-field c only-logged-in">
+      <div class="form-label">
+        <label for="display_name">{{ _('Display Name') }}</label>
+      </div>
+      <div class="form-col">
+        <input name="display_name" id="display_name" pattern="[^\s].*|\s+\S.+" value="{{ user.get_setting('display_name') }}" maxlength="50" type="text" required>
+      </div>
+    </div>
+
+    <div class="simple-field c">
+      <div class="form-label">
+        <label for="region">{{ _('Region') }}</label>
+      </div>
+      <div class="form-col">
+        <div class="pretty-select">
+          <select name="region" id="region">
+            {% set user_region = user.get_setting('region') %}
+            {% for code, region in settings.REGION_CHOICES_SLUG.items() %}
+              <option value="{{ code }}"{{ ' selected' if code == user_region }}>
+                {{ region }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p><button type="submit" class="button">{{ _('Save Changes') }}</button></p>
+      <p class="extras">
+        <a href="#" class="button alt logout only-logged-in">{{ _('Sign Out') }}</a>
+        <a href="#" class="button alt persona only-logged-out">{{ _('Sign In / Sign Up') }}</a>
+        {% if user.get_permission('reviewer') %}
+          <a href="/reviewers/apps/queue/" class="button alt only-logged-in reviewer-tools">{{ _('Reviewer Tools') }}</a>
+        {% endif %}
+      </p>
+    </footer>
+  </form>
+
+</section>

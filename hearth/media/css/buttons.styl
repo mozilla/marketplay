@@ -1,0 +1,117 @@
+@import 'lib';
+
+.button, .button:visited {
+    // Bluish.
+    btn-shadow();
+    gradient-two-color(#4cb1ff, #1793e5);
+    background-repeat: repeat-x;
+    border: 1px solid #1793e5;
+    border-radius: 3px;
+    color: $white;
+    display: inline-block;
+    font: 400 15px/48px $open-stack;
+    height: 48px;
+    min-width: 100px;
+    white-space: nowrap;
+    padding: 0 20px;
+    text-align: center;
+    text-decoration: none;
+    &:hover, &:focus {
+        gradient-two-color(darken(#4cb1ff, 10%), darken(#1793e5, 10%));
+        text-decoration: none;
+    }
+    &:hover, &:focus, &:active {
+        color: darken($white, 10%);
+    }
+    &:active {
+        btn-shadow-active();
+        border: 1px solid darken(#1793e5, 10%);
+    }
+}
+.button {
+    ellipsis();
+    // Grayish.
+    &.disabled, &[disabled] {
+        gradient-two-color(#e7e7e7, #fafbfc);
+        border: 1px solid #b7b7b7;
+        box-shadow: none;
+        color: #a7a7a7;
+        pointer-events: none;
+    }
+    // Redish.
+    &.manage {
+        gradient-two-color(#DA5132, #A91300);
+        border: 1px solid #A91300;
+        &:hover, &:focus {
+            gradient-two-color(darken(#DA5132, 10%), darken(#A91300, 10%));
+        }
+        &:active {
+            btn-shadow-active();
+            border: 1px solid darken(#A91300, 10%);
+        }
+    }
+    // Grayish (legacy).
+    &.alt {
+        alt-btn-shadow();
+        gradient-two-color(#fff, #e7e7e7);
+        border: 1px solid #b7b7b7;
+        color: $london-fog-gray;
+        &:hover, &:focus {
+            alt-btn-hover-focus();
+        }
+        &:hover, &:focus, &:active {
+            alt-btn-hover-focus-active();
+        }
+        &:active {
+            alt-btn-active();
+        }
+    }
+    // Waiting/Loading spinner.
+    &.loading-submit {
+        position: relative;
+        &:after {
+            content: "";
+            display: block;
+            spinner('absolute alt');
+            top: 8px;
+        }
+    }
+    &.product {
+        fatten();
+    }
+
+    &[disabled], &.disabled,
+    &.purchasing, &.purchased,
+    &.installing, &.installed {
+        pointer-events: none;
+    }
+    &.installed, &.purchased, &.incompatible {
+        pointer-events: auto;
+    }
+
+    .spin {
+        display: inline-block;
+        spinner('install');
+    }
+}
+
+@media $retina {
+    .button {
+        &.loading-submit:after {
+            spinner-alt-image('retina');
+        }
+        .spin {
+            spinner-install-image('retina');
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .button {
+        padding: 0 15px;
+        &.fat {
+            display: block;
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "name": "Fireplace",
+    "icons": {
+        "128": "/media/img/logos/128.png",
+        "32": "/media/img/logos/32.png",
+        "64": "/media/img/logos/64.png"
+    },
+    "description": "The Firefox Marketplace",
+    "launch_path": "/index.html",
+    "default_locale": "en-US",
+    "locales": {
+        "cs": {},
+        "de": {},
+        "es": {},
+        "fr": {},
+        "ga-IE": {},
+        "it": {},
+        "pl": {},
+        "zh-TW": {}
+    },
+    "developer": {
+        "url": "http://mozilla.org",
+        "name": "Mozilla"
+    },
+    "orientation": ["portrait-primary"],
+    "activities": {
+        "marketplace-search": {"href": "/index.html"},
+        "marketplace-category": {"href": "/index.html"},
+        "marketplace-app": {"href": "/index.html"},
+        "marketplace-app-rating": {"href": "/index.html"}
+    }
+}

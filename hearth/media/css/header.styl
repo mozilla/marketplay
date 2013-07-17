@@ -1,0 +1,605 @@
+// styles for the global site header only.
+@import 'lib';
+
+// ***************** Wide Mobile (600+ px)
+
+// usable on any header
+.header {
+    border-top: 1px solid $salt-flat-white;
+    display-flex();
+    gradient-two-color(#fff, #e1e1e1);
+    height: 48px;
+    max-height: 48px;
+    position: relative;
+    width: 100%;
+    > * {
+        flex-center();
+    }
+    .flex-shift, .title {
+        flex(1);
+        padding-left: 10px;
+    }
+    .title {
+        color: $castle-skull-gray;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 48px;
+        z-index: 10;
+    }
+}
+
+.header, .secondary-header {
+    &:before {
+        // Because box-shadows can go suck it.
+        bottom: -10px;
+        content: "";
+        display: block;
+        gradientTop(unquote('rgba(33,40,46,.4) 2%, rgba(241,241,241,.2) 30%, rgba(241,241,241,0) 100%'));
+        height: 10px;
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+    }
+}
+
+// # for the primary site header *only*. If you need to generalize a style in here, move it.
+.site-header {
+    display: block;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    z-index: 20;
+    > * {
+        display: block;
+    }
+    > nav {
+        height: 48px;
+        display-flex();
+        position: relative;
+        text-align: left;
+        width: 100%;
+        > * {
+            flex-center();
+            display: block;
+        }
+    }
+    .site {
+        height: 48px;
+        margin: 0 5px;
+        width: 200px;
+        a {
+            display: block;
+            height: 47px;
+            hidetext();
+            width: 100%;
+        }
+    }
+    .wordmark {
+        background: url(../img/pretty/marketplace_logo.png) 0 50% no-repeat;
+        background-size: auto 37px;
+        display: block;
+        height: 47px;
+    }
+    .header-button {
+        display: none;
+    }
+}
+
+.act-tray {
+    height: 47px;
+    position: relative;
+    width: 34px;  // 24px + 10px margin
+}
+
+.account-links {
+    cursor: pointer;
+    position: absolute;
+    right: -15px;
+    top: 68px;
+    width: 320px;
+    z-index: 12;
+    ul {
+        background: $grey-gardens-gray;
+        line-height: 20px;
+        list-style-type: none;
+    }
+    li {
+        position: relative;
+        + li {
+            border-top: 1px dashed $cement-gray;
+        }
+        a {
+            color: $cement-gray;
+            display: block;
+            font-size: 15px;
+            font-weight: 400;
+            padding: 10px 15px;
+            text-decoration: none;
+            &:hover {
+                background-color: $sailor-blue;
+                color: #fff;
+            }
+        }
+    }
+    a b {
+        display: block;
+        font-weight: 300;
+    }
+}
+
+.site-header .search {
+    margin-right: 10px;
+    position: relative;
+    transition(.3s all);
+    width: 230px;
+    label {
+        display: none;
+    }
+}
+
+#search-q {
+    background: #fff;
+    border: 1px solid #d5d5d5;
+    border-color: $cement-gray #d5d5d5 #e0e0e0;
+    border-radius: 10px;
+    color: $sailor-blue;
+    font: 15px/28px $open-stack;
+    height: 34px;
+    outline: none;
+    padding: 2px 10px 1px;
+    width: 100%;
+    z-index: 2;
+    &:-moz-placeholder {
+        color: darken($cement-gray, 5%);
+    }
+    &::-moz-placeholder {
+        color: darken($cement-gray, 5%);
+    }
+    &::-webkit-input-placeholder {
+        color: darken($cement-gray, 5%);
+    }
+    &:invalid ~ .search-clear {
+        // Hide the X icon when the search field is empty.
+        display: none;
+    }
+    &:valid {
+        // Pad for the X icon.
+        padding-right: 34px;
+    }
+}
+
+.close {
+    background: url(../img/pretty/close.svg) 0 50% no-repeat;
+    background-size: 18px auto;
+    height: 34px;
+    hidetext();
+    position: absolute;
+    right: 10px;
+    top: 0;
+    width: 18px;
+}
+
+// Buttons that appear in headers.
+.header-button {
+    color: $castle-skull-gray;
+    display: block;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    width: 48px;
+
+    // header buttons with icons
+    &.icon {
+        position: relative;
+        hidetext();
+        &:after {
+            background-repeat: no-repeat;
+            content: "";
+            display: block;
+        }
+    }
+    &.cancel:after {
+        background-position: 0 -24px;
+        height: 24px;
+        left: 13px;
+        position: absolute;
+        top: 12px;
+        width: 24px;
+    }
+    &.settings {
+        background: url(../img/pretty/settings_gear.svg) 50% 50% no-repeat;
+        background-size: 24px auto;
+        display: block;
+        height: 40px;
+        position: absolute;
+        right: 2px;
+        top: 2px;
+        width: 40px;
+    }
+    &.back {
+        hidetext();
+        background: url(../img/pretty/back_arrow.svg) center no-repeat;
+        background-size: 12px 24px;
+        margin-right: 2px;
+        width: 50px;
+        &:hover {
+            background-image: url(../img/pretty/back_arrow_active.svg);
+        }
+    }
+    // 'Sign In'
+    &.persona {
+        display: none;
+        margin-left: 15px;
+        word-break: keep-all;
+        word-wrap: normal;
+        &.loading-submit {
+            hidetext();
+            outline: 0;
+            spinner('loading');
+            margin-left: 15px;
+            width: 50px;
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
+
+// On hover the settings gear icon should turn blue.
+// On the Account Settings page the gear should also turn blue.
+.act-tray.active .header-button.settings,
+[data-page-type~=settings] .header-button.settings {
+    background-image: url(../img/pretty/settings_gear_active.svg);
+}
+
+.secondary-header,
+.featured-header {
+    position: relative;
+    h2, h3 {
+        color: $london-fog-gray;
+        margin-bottom: -3px;
+        max-width: calc(unquote('100% - 75px'));
+        min-width: 70%;
+        padding-bottom: 3px;
+        position: absolute;
+    }
+}
+
+.secondary-header {
+    background: $salt-flat-white;
+    border-top: 1px solid #fff;
+    .subtitle {
+        color: $earl-gray;
+        font-size: 20px;
+        font-weight: 300;
+        &:before {
+            content: "/\00a0";
+            color: darken($seavan-salt-white, 4%);
+            font-size: 30px;
+        }
+    }
+}
+
+.featured-header {
+    padding: 15px 10px 0;
+    h3, .view-all {
+        font-weight: 400;
+    }
+}
+
+.gallery .featured-header {
+    border-top: 7px solid $flamin-hot-cheetos-orange;
+}
+
+@media $narrower-than-desktop {
+    .hide-on-mobile {
+        display: none;
+    }
+    .secondary-header {
+        height: 40px;
+        h2 {
+            font-size: 15px;
+            line-height: 40px;
+            margin: 0 10px;
+        }
+        .subtitle, .subtitle:before {
+            font-size: 15px;
+        }
+        .subtitle {
+            font-weight: 400;
+        }
+    }
+}
+
+// search results tile expand toggle
+.expand-toggle {
+    display: block;
+    height: 22px;
+    line-height: 22px;
+    position: absolute;
+    right: 10px;
+    top: 9px;
+    width: 69px;
+    &:before,
+    &:after {
+        content: "";
+        display: block;
+        height: 22px;
+        position: absolute;
+    }
+    &:before {
+        background: url(../img/pretty/list_view_active.svg) no-repeat;
+        left: 0;
+        width: 24px;
+    }
+    &:after {
+        background: url(../img/pretty/screenshot_view.svg) 10px 0 no-repeat;
+        border-left: 1px dotted $cement-gray;
+        left: 34px;
+        width: 34px;
+    }
+    &.active {
+        &:before {
+            background-image: url(../img/pretty/list_view.svg);
+        }
+        &:after {
+            background-image: url(../img/pretty/screenshot_view_active.svg);
+        }
+    }
+}
+
+.overlay .expand-toggle,
+.site-header .account-links,  // .site-header for specificity
+.active .account-links {
+    display: none;
+}
+
+// How does the header look for the various page "types"?
+[data-page-type~=root] .header .expand-toggle {
+    display: none;
+}
+
+// When we're holding down on the debug page, don't allow clicking on the logo
+// because that would take us back home.
+[data-page-type~=debug] .header .wordmark {
+    pointer-events: none;
+}
+
+// TODO: Remove "leaf" `data-page-type`. We now have only two: "root" and "search".
+[data-page-type~=search],
+[data-page-type~=leaf] {
+    .back, .expand {
+        display: block;
+    }
+    .site, .flex-shift {
+        display: none;
+    }
+    .flex-span {
+        display: block;
+        flex(1);
+    }
+}
+
+main {
+    padding-top: 48px;
+}
+
+@media (min-width: 710px) {
+    main {
+        padding: 96px 0 48px;  // 48px padding + 48px to offset header
+    }
+}
+
+// ***************** Cursor (Desktop) (>= 1024px)
+
+// This probably shouldn't be media query based.
+@media (min-width: 1024px) {
+    main {
+        padding: 48px 0;
+    }
+
+    .header-button.settings {
+        background-position: 50% 10px;
+        background-size: 30px auto;
+        right: 0;
+        top: 0;
+    }
+
+    .act-tray,
+    .act-tray .header-button.settings {
+        height: 48px;
+        width: 50px;
+    }
+
+    .act-tray {
+        margin-left: 15px;
+        &.active .settings {
+            background-position: calc(unquote('50% + 30px')) 10px;
+            height: 70px;
+            margin-left: -60px;
+            width: 110px;
+            &:after {
+                border: 38px solid transparent;
+                border-bottom-color: $grey-gardens-gray;
+                display: block;
+                position: absolute;
+                right: -13px;
+                top: 10px;
+            }
+        }
+    }
+
+    .site-header {
+        height: 90px;
+        max-height: 90px;
+        position: relative;
+        > nav {
+            height: 90px;
+            margin: 0 auto;
+            max-width: 1024px;
+        }
+        .site {
+            margin: 0;
+            width: 232px;
+        }
+        .site, .site a, .wordmark {
+            height: 60px;
+        }
+        .wordmark {
+            background-position: -5px 50%;
+            background-size: 245px auto;
+            max-width: 232px;
+            width: 232px;
+        }
+        .persona {
+            display: block;
+        }
+        .act-tray {
+            display: none;
+        }
+    }
+
+    .logged-in .site-header {
+        .act-tray {
+            display: block;
+        }
+        .persona {
+            display: none;
+        }
+    }
+
+    .active .account-links {
+        display: block;
+    }
+
+    .site-header .search,
+    #search-q {
+        width: 532px;
+    }
+
+    #search-q {
+        font-size: 18px;
+        font-weight: 400;
+        height: 48px;
+        line-height: 48px;
+        padding: 6px 15px 4px;
+        &:valid {
+            // Adjust width for padding for the X icon.
+            padding-right: 42px;
+        }
+    }
+
+    .search-clear {
+        right: 15px;
+        top: 8px;
+    }
+
+    // How does the header look for the various page "types"?
+    [data-page-type~=search],
+    [data-page-type~=leaf] {
+        .back, .site {
+            display: block;
+        }
+        .back, .site-header .expand-toggle,
+        .flex-span {
+            display: none;
+        }
+        .flex-shift {
+            display: block;
+        }
+    }
+}
+
+// ***************** Narrow Mobile (<= 671px)
+
+@media $narrower-than-desktop {
+    [data-page-type~=leaf],
+    [data-page-type~=root],
+    [data-page-type~=search] {
+        .site-header {
+            border-bottom: 1px solid darken($cement-gray, 5%);
+            &:before {
+                display: none;
+            }
+        }
+    }
+}
+
+// ***************** Wide Mobile (> 671px)
+
+@media $at-least-desktop {
+    .category.gallery {
+        border-top: 7px solid $flamin-hot-cheetos-orange;
+        .featured-header {
+            border-top: 0;
+        }
+    }
+    .secondary-header,
+    .featured-header {
+        h2, h3 {
+            color: $castle-skull-gray;
+        }
+    }
+    .secondary-header {
+        border: 0;
+        height: 48px;
+        max-height: 48px;
+        position: relative;
+        &:before {
+            display: none;
+        }
+        h2 {
+            margin: 0;
+        }
+    }
+    .featured-header {
+        padding: 15px 15px 0;
+    }
+    .expand-toggle {
+        top: 13px;
+        right: 0;
+    }
+}
+
+@media (max-width: 540px) {
+    .site-header {
+        .search {
+            flex(1);
+            width: auto;
+        }
+    }
+    [data-page-type~=root] {
+        .site-header {
+            .site, .wordmark {
+                width: 35px;
+            }
+            .flex-shift {
+                display: none;
+            }
+        }
+    }
+    [data-page-type~=search],
+    [data-page-type~=leaf] {
+        .flex-span, .act-tray {
+            display: none;
+        }
+    }
+
+    .site-header.suggestions {
+        nav > *:not(.search) {
+            display: none;
+        }
+        .search {
+            position: relative;
+            width: 100%;
+            left: auto;
+        }
+        .search-clear {
+            display: block;
+        }
+    }
+}
+
+.nav-overlay.show {
+    background: transparent;
+}

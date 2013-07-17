@@ -1,0 +1,33 @@
+{% include "_macros/forms.html" %}
+{% set current_page = 'feedback' %}
+
+<div class="main feedback modal c">
+  <div>
+    {% include 'settings/nav.html' %}
+    <form method="post" class="feedback-form form-modal">
+      <p class="brform simple-field c">
+        <textarea name="feedback" required></textarea>
+      </p>
+      <p class="form-footer">
+        {{ potato_captcha() }}
+        <button class="button" type="submit">{{ _('Send') }}</button>
+      </p>
+    </form>
+    <ul class="support-list">
+      <li>
+        <a href="https://support.mozilla.org/products/firefox-os/marketplace" class="button alt" target="_blank">
+          {{ _('Get Help') }}</a>
+      </li>
+      <li>
+        <a href="{{ url('privacy') }}" class="button alt">
+          {{ _('Privacy Policy') }}</a>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url('terms') }}" class="button alt">
+          {{ _('Terms of Use') }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

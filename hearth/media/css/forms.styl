@@ -1,0 +1,226 @@
+@import 'lib';
+
+.potato-captcha {
+    display: none;
+}
+
+button, input, select, textarea {
+    font: 100% $open-stack;
+    margin: 0;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+button, input {
+    line-height: normal;
+}
+
+button, input[type=button], input[type=reset], input[type=submit] {
+    cursor: pointer;
+}
+
+label {
+    display: block;
+    font-weight: 400;
+}
+
+input::-webkit-input-placeholder {
+    color: $gray;
+}
+
+input:-moz-placeholder {
+    color: $gray;
+    text-overflow: ellipsis;  // Firefox 18 and below
+}
+
+input::-moz-placeholder {
+    text-overflow: ellipsis;  // Firefox 19+
+}
+
+input[placeholder] {
+    text-overflow: ellipsis;
+    // Because bug 673873 is stupidface.
+    // Yes, the order matters. Firefox 18 (and below) is clownshoes.
+    &:-moz-placeholder:focus {
+        color: transparent !important;
+    }
+    &:focus::-moz-placeholder {
+        color: transparent !important;
+    }
+    &:focus::-webkit-input-placeholder {
+        color: transparent !important;
+    }
+}
+
+form {
+    input[type=email], input[type=text], textarea {
+        border-radius: 2px;
+        border: 1px solid $light-gray;
+        padding: 5px;
+        &[disabled], &[readonly] {
+            background: $seavan-salt-white;
+            color: $earl-gray;
+            cursor: not-allowed;
+        }
+    }
+    input[type=email], input[type=text], #search-q, textarea {
+        &:focus {
+            border-color: $sailor-blue;
+            box-shadow: 0 0 8px $sailor-blue;
+        }
+    }
+}
+
+textarea {
+    display: block;
+    overflow: auto;
+    vertical-align: top;
+}
+
+.form-grid {
+    diagonal-lines();
+    width: 100%;
+    input[type=email],
+    input[type=text],
+    .pretty-select,
+    select {
+        height: 48px;
+        width: 100%;
+    }
+    input[type=email],
+    input[type=text],
+    .pretty-select {
+        alt-btn-shadow();
+        border-radius: 3px;
+        border: 1px solid $primer-gray;
+        box-shadow: 0 1px 0 #fff, 0 1px 1px $seavan-salt-white inset;
+        color: $london-fog-gray;
+        font: 400 15px/28px $open-stack;
+        height: 48px;
+        padding: 10px 12px;
+        text-decoration: none;
+    }
+    .pretty-select,
+    .pretty-select select {
+        cursor: pointer;
+    }
+    .pretty-select {
+        gradient-two-color(#fff, $seavan-salt-white);
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        &:before {
+            dropdown();
+            z-index: 2;
+        }
+        &:after {
+            // Hide the native `<select>` arrow so we can overlay our
+            // dropdown arrow in `:before`.
+            border-left: 1px solid $cement-gray;
+            box-shadow: 0 1px 0 #fff, 0 1px 1px $seavan-salt-white inset;
+            content: "";
+            display: block;
+            gradient-two-color(#fff, $seavan-salt-white);
+            height: 100%;
+            pointer-events: none;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 45px;
+            z-index: 1;
+        }
+        &:hover, &:active {
+            &:before {
+                background-image: url(../img/pretty/dropdown_active.svg);
+            }
+        }
+        select {
+            -moz-padding-start: 10px;
+            appearance-none();
+            background: none;
+            border: 0;
+            padding: 10px 12px;
+        }
+    }
+    label {
+        margin-bottom: 5px;
+    }
+    .simple-field {
+        padding: 10px 10px 0;
+    }
+    footer {
+        border-top: $castle-skull-gray 1px dashed;
+        margin-top: 10px;
+        p {
+            border-bottom: $castle-skull-gray 1px dashed;
+            padding: 10px;
+        }
+        .extras {
+            background: $salt-flat-white;
+            border: 0;
+        }
+        .reviewer-tools {
+            margin-top: 15px;
+        }
+        button {
+            width: 100%;
+        }
+    }
+}
+
+@media $at-least-desktop {
+    .form-grid {
+        border: 1px solid $seavan-salt-white;
+        border-radius: 10px;
+        float: left;
+        margin-top: 30px;
+        padding: 3px 5px 8px;  // On desktop we want 18px above and below.
+        position: relative;
+        .simple-field {
+            float: left;
+            padding: 15px 10px 10px;
+            width: 50%;
+        }
+        footer {
+            position: absolute;
+            top: -90px;
+            right: -10px;
+            p {
+                float: left;
+            }
+            // Show only "Save Changes" and "Sign Out" buttons on tablet and larger.
+            a:nth-child(2) ~ a {
+                display: none;
+            }
+        }
+        footer, footer p {
+            border: 0;
+        }
+    }
+    #account-settings .secondary-header h2 {
+        // To accomodate the floated "Sign in" button.
+        max-width: calc(unquote('100% - 330px'));
+    }
+    .reviewer-tools {
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    .form-grid {
+        .extras {
+            display: none;
+        }
+    }
+}
+
+// Because specificity
+.only-logged-in.button,
+.logged-in .only-logged-out.button {
+    display: none;
+}
+
+.only-logged-out.button,
+.logged-in .only-logged-in.button {
+    display: block;
+}

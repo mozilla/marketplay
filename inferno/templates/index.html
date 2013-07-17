@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Install Firefox Marketplace Nightly</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            height: 100%;
+            width: 100%;
+            background: #c0ffee;
+        }
+        div {
+            position: absolute;
+            top: 20px;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            margin: auto;
+        }
+        button {
+            color: white;
+            display: block;
+            width: 100%;
+            height: 100%;
+            font-size: 50px;
+            border-radius: 50px;
+            border: 0;
+            background: linear-gradient(#0c0,#0a0);
+            cursor: pointer;
+        }
+        button:active {
+            transform: scale(1, -1);
+        }
+    </style>
+</head>
+<body>
+
+<div><button id="install" class="packagedmozapp">Install<br><br><marquee><blink>OH YEAH</blink></marquee></button></div>
+<script type="text/javascript">
+document.getElementById('install').addEventListener('click', function(e) {
+    var a = document.createElement('a');
+    a.href = '/minifest';
+    console.log(a.href);
+  window.navigator.mozApps.installPackage(a.href);
+  e.preventDefault();
+});
+</script>
+</body>
+</html>
