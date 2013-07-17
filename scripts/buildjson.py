@@ -1,9 +1,11 @@
+import json
 import os.path
 import sys
-import json
 
 from parser import Parser
 
+
+media = os.path.join(os.path.dirname(__file__), '..', 'hearth', 'media')
 
 if len(sys.argv) < 2:
     raise Exception('A directory name is required.')
@@ -21,5 +23,5 @@ for root, _, files in os.walk(sys.argv[1]):
         parser.parse()
         output.append({'api_name': f[:-4], 'endpoints': parser.get_array()})
 
-with open('out.json', 'w') as fd:
+with open(os.path.join(media, 'out.json'), 'w') as fd:
     fd.write(json.dumps({'api_list': output}))

@@ -78,7 +78,7 @@ class Parser(object):
                 found = True
 
         if not (scope and (found)):
-            raise Exception('invalid param name mentioned.')
+            raise Exception('Invalid param name mentioned "%s".' % param_name)
 
     def _new_http_request_scope(self, match):
         self.scope = 'request'
