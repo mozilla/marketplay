@@ -1,0 +1,52 @@
+<div class="api-main c">
+  {% defer (url='/media/out.json') %}
+  <section class="endpoints">
+    {% for api in this.api_list %}
+    <div class="api-container" id="api_{{ api.api_name }}">
+      <h2><a class="api-name">{{ api.api_name }}</a></h2>
+      <div class="endpoints-container hidden">
+        {% for endpoint in api.endpoints %}
+        <div class="endpoint-container" data-url="{{ endpoint.url }}" data-method="{{ endpoint.method }}">
+          <p><a class="api-endpoint">{{ endpoint.method }} {{ endpoint.url }}</a></p>
+          <div class="options hidden">
+            <section class="toolbox">
+              <input name="view-selector" class="request-selector" value="request" checked type="radio">Request</input>
+              <input name="view-selector" class="response-selector" value="response" type="radio">Response</input>
+              <button data-url="{{ endpoint.url }}" data-method="{{ endpoint.method }}" class="send-request button">Send Request</button>
+            </section>
+            <div class="view request-view">
+              {% if endpoint.url_args.length %}
+              <div class="url-args">
+                <strong>URL Arguments</strong>
+                {% for arg in endpoint.url_args %}
+                <p>
+                  <span>{{ arg.name }}</span>
+                  <input type="text" size="20" class="url-arg" data-index="{{ endpoint.url_args.indexOf(arg) }}" data-name="{{ arg.name }}">
+                </p>
+                {% endfor %}
+              </div>
+              {% endif %}
+              {% if endpoint.request.params.length %}
+              <div class="request-params">
+                <strong>Request Params</strong>
+              {% for param in endpoint.request.params %}
+                <p>
+                  <span>{{ param.name }}</span>
+                  <input type="text" size="20" class="param" data-name="{{ param.name }}">
+                </p>
+              {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            <div class="hidden view response-view"></div>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+  <div class="playfield c">Playground Options
+  </div>
+  {% end %}
+</div>

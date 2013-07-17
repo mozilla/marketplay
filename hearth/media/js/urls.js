@@ -129,7 +129,15 @@ define('urls',
             path = path.substr(1);
         }
         return media_url + path;
-    }
+    };
+
+    var absolutifyApiUrl = function(url, params) {
+        var url = settings.api_url + url;
+        if (params) {
+            url = require('utils').urlparams(url, params);
+        }
+        return url;
+    };
 
     return {
         reverse: reverse,
@@ -143,6 +151,7 @@ define('urls',
             }
         },
         media: media,
-        _device: _device
+        _device: _device,
+        absolutifyApiUrl: _userArgs(absolutifyApiUrl)
     };
 });

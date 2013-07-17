@@ -33,7 +33,9 @@ var routes = [
     {'pattern': '^/terms-of-use$', 'view_name': 'terms'},
 
     {'pattern': '^/tests$', 'view_name': 'tests'},
-    {'pattern': '^/debug$', 'view_name': 'debug'}
+    {'pattern': '^/debug$', 'view_name': 'debug'},
+
+    {'pattern': '^/apiplayground$', 'view_name': 'apiplayground'}
 ];
 
 dependencies = routes.map(function(i) {return 'views/' + i.view_name;});
