@@ -1,0 +1,13 @@
+name: marketplay
+framework:
+  type: node
+  runtime: node
+hooks:
+  post-staging:
+    - npm install -d .
+    - git submodule update --init
+
+ignores: []
+
+processes:
+    web: node damper.js --host 0.0.0.0 --port $PORT

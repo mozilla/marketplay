@@ -1,0 +1,3 @@
+[submodule "zamboni"]
+	path = zamboni
+	url = https://github.com/mozilla/zamboni
