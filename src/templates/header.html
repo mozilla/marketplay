@@ -1,0 +1,12 @@
+<nav role="navigation">
+  <a href="#" id="nav-back" class="header-button icon back" title="{{ _('Back') }}"><b>{{ _('Back') }}</b></a>
+  <h1 class="site"><a href="/"><span class="wordmark">Firefox Marketplace</span></a></h1>
+  <span class="flex-shift"></span>
+  <span class="flex-span"></span>
+  <span class="user-email">{{ user.get_setting('email') }}</span>
+  {% if user.logged_in() %}
+    <a href="#" class="logout">{{ _('Sign Out') }}</a>
+  {% else %}
+    <a href="#" class="header-button persona">{{ _('Sign In') }}</a>
+  {% endif %}
+</nav>
