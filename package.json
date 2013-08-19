@@ -1,0 +1,13 @@
+{
+  "name": "marketplay",
+  "version": "1.0.0",
+  "private": true,
+  "repository": {
+    "url": "git://github.com/mozilla/marketplay.git",
+    "type": "git"
+  },
+  "engines": {
+    "node": ">= 0.8.x",
+    "npm": ">= 1.1.x"
+  }
+}

@@ -1,13 +1,12 @@
 name: marketplay
 framework:
   type: node
-  runtime: node
 hooks:
   post-staging:
-    - npm install -d .
-    - git submodule update --init
+    - npm install commonplace
+    - ./scripts/buildjson docs/
 
 ignores: []
 
 processes:
-    web: node damper.js --host 0.0.0.0 --port $PORT
+    web: ./node_modules/commonplace/bin/damper --port $PORT

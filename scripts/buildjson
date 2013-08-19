@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import json
 import os.path
 import sys
@@ -5,7 +6,7 @@ import sys
 from parser import Parser
 
 
-media = os.path.join(os.path.dirname(__file__), '..', 'hearth', 'media')
+media = os.path.join(os.path.dirname(__file__), '..', 'src', 'media')
 
 if len(sys.argv) < 2:
     raise Exception('A directory name is required.')
