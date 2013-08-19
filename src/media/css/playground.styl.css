@@ -2,6 +2,7 @@ a {
   cursor: pointer;
 }
 .api-name {
+  display: block;
   font-size: 26px;
 }
 .api-main {
@@ -52,6 +53,10 @@ a {
 .options input {
   margin: 5px;
 }
+.playfield input[type=radio],
+.options input[type=radio] {
+  margin-right: 7px;
+}
 .playfield {
   margin-top: 10px;
   float: right;
@@ -70,6 +75,9 @@ a {
   background-color: #eee;
   padding: 10px;
   margin-bottom: 10px;
+}
+.toolbox label {
+  display: inline-block;
 }
 .view {
   height: 75%;

@@ -10,8 +10,8 @@
           <p><a class="api-endpoint">{{ endpoint.method }} {{ endpoint.url }}</a></p>
           <div class="options hidden">
             <section class="toolbox">
-              <input name="view-selector" class="request-selector" value="request" checked type="radio">Request</input>
-              <input name="view-selector" class="response-selector" value="response" type="radio">Response</input>
+              <label><input name="view-selector" class="request-selector" value="request" checked type="radio">Request</label>
+              <label><input name="view-selector" class="response-selector" value="response" type="radio">Response</label>
               <button data-url="{{ endpoint.url }}" data-method="{{ endpoint.method }}" class="send-request button">Send Request</button>
             </section>
             <div class="view request-view">
