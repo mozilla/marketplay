@@ -3,7 +3,7 @@ define('views/apiplayground',
     function(z, requests, urls) {
     'use strict';
 
-    function buildUrl(url, args, params) {
+    function buildUrl(url, args) {
         var arg = null;
         var val = '';
         var regex = null;
@@ -73,9 +73,9 @@ define('views/apiplayground',
             $this.siblings('.response-selector').trigger('click');
         }
 
-        url = buildUrl(url, args, params);
-        url = urls.absolutifyApiUrl(url, {}, params);
-        requests[method](url).done(responseHandler).fail(errorHandler);
+        url = buildUrl(url, args);
+        url = urls.absolutifyApiUrl(url, params);
+        requests[method](url, params).done(responseHandler).fail(errorHandler);
     });
 
     return function(builder) {
