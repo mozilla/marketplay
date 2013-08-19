@@ -4,7 +4,7 @@ import re
 
 rules = [
     ('http_endpoint',
-     r'\.\. http:(?P<method_name>GET|POST|DELETE|PUT):: (?P<url>.+)'),
+     r'\.\. http:(?P<method_name>GET|POST|DELETE|PUT|PATCH):: (?P<url>.+)'),
     ('http_request_scope', r'\*\*Request\*\*'),
     ('http_response_scope', r'\*\*Response\*\*'),
     ('http_endpoint_note', r'\.\. note:: (?P<note_text>.+)'),
