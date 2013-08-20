@@ -12,10 +12,16 @@ Follow commonplace installation instructions on this page: https://github.com/mo
 
 ## Usage
 
-From the terminal, run the following command
+From the terminal, run the following command:
 
 ```bash
 damper
 ```
 
 This will run a test server and will watch the assets and templates to reflect any changes made to them while the server is running.
+
+To extract docs:
+
+```bash
+./scripts/buildjson docs
+```
