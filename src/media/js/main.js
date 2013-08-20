@@ -1,4 +1,4 @@
-console.log('Sample Commonplace App');
+console.log('Marketplay');
 
 require.config({
     enforceDefine: true,

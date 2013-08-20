@@ -4,9 +4,8 @@ framework:
 hooks:
   post-staging:
     - npm install commonplace
-    - ./scripts/buildjson docs/
 
-ignores: []
+ignores: ['docs']
 
 processes:
     web: ./node_modules/commonplace/bin/damper --port $PORT

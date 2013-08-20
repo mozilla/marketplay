@@ -1,12 +1,13 @@
 define('views/apiplayground',
-    ['z', 'requests', 'urls'],
-    function(z, requests, urls) {
+    ['z', 'requests', 'urls', 'l10n'],
+    function(z, requests, urls, l10n) {
     'use strict';
+
+    var gettext = l10n.gettext;
 
     function buildUrl(url, args) {
         var arg = null;
         var val = '';
-        var regex = null;
         var matches;
         var regex = /\/\(.+?\)\//g;
 
@@ -15,16 +16,15 @@ define('views/apiplayground',
             return '/' + args[i++] + '/';
         });
 
-        return url
+        return url;
     }
 
     z.page.on('click', '.api-endpoint', function(e) {
         var $this = $(this);
         $('.options').hide();
         var html = $this.parent().siblings('.options').html();
-        $('.playfield').html(html);
+        $('.playfield .replace').html(html);
     });
-
     z.page.on('click', '.api-name', function() {
         $('.endpoints-container').addClass('hidden');
         $(this).closest('.api-container').find('.endpoints-container')
@@ -33,17 +33,16 @@ define('views/apiplayground',
 
     z.page.on('click', 'input[name="view-selector"]', function() {
         var $this = $(this);
-        var view_name = $this.val();
         var $toolbox = $this.closest('.toolbox');
         $toolbox.siblings('.view').hide();
-        $toolbox.siblings('.' + view_name + '-view').show();
+        $toolbox.siblings('.' + $this.val() + '-view').show();
     });
 
     z.page.on('click', '.send-request', function() {
         var $this = $(this);
         var url = $this.data('url');
         var method = $this.data('method');
-        var $toolbox = $this.closest('.toolbox')
+        var $toolbox = $this.closest('.toolbox');
         var params = {};
 
         var $requestView = $toolbox.siblings('.request-view');
@@ -61,21 +60,32 @@ define('views/apiplayground',
             args.push($_this.val());
         });
 
+        function progressHandler() {
+            $toolbox.siblings('.response-view').html('<p class="spinner spaced alt"></p>');
+        }
+
         function errorHandler(err) {
-            var json = JSON.stringify(err.responseText, null, '  ');
-            $this.siblings('.response-view').html('<div><p class="error">Error occured</p><pre>' + json + '</pre></div>');
-            $this.siblings('.response-selector').trigger('click');
+            var $pre = $('<pre>');
+            $pre.text(err.responseText);
+            $toolbox.siblings('.response-view').html('<div><p class="error">' +
+                gettext('Erroneous response') + '</p><pre>' + $pre.text() + '</pre></div>');
         }
 
         function responseHandler(data) {
-            // Display response in to the response panel.
-            $toolbox.siblings('.response-view').html('<pre>' + JSON.stringify(data, null, '  ') + '</pre>');
-            $this.siblings('.response-selector').trigger('click');
+            var $pre = $('<pre>');
+            $pre.text(JSON.stringify(data, null, '  '));
+            $toolbox.siblings('.response-view').html('').append($pre);
         }
 
         url = buildUrl(url, args);
         url = urls.absolutifyApiUrl(url, params);
-        requests[method](url, params).done(responseHandler).fail(errorHandler);
+        $this.closest('.toolbox').find('.response-selector').trigger('click');
+        progressHandler();
+        if (method == 'delete') {
+            requests[method](url).done(responseHandler).fail(errorHandler);
+        } else {
+            requests[method](url, params).done(responseHandler).fail(errorHandler);
+        }
     });
 
     return function(builder) {
