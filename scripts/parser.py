@@ -16,8 +16,6 @@ rules = [
 
 no_match_line = r'.+?(\n|$)'
 
-def strip_junk(match):
-    return ''
 
 class Parser(object):
     def __init__(self, string):
@@ -34,7 +32,7 @@ class Parser(object):
 
         args_regex = r'\/\((.+?)\)\/'
         matches = re.findall(args_regex, url)
-        url_args = []
+        self.current_endpoint['url_args'] = url_args = []
         for args in matches:
             # for multiple args
             split_matches = args.split('|')
@@ -47,24 +45,18 @@ class Parser(object):
                 arg_names.append(secondary_match.group('arg_name'))
                 arg_types.append(secondary_match.group('arg_type'))
 
-            args_name = '|'.join(arg_names)
-            url_args.append({'name': args_name,
+            url_args.append({'name': '|'.join(arg_names),
                              'type': '|'.join(arg_types)})
-
-        self.current_endpoint['url_args'] = url_args
 
     def _new_param(self, match):
         # scope = request | respone
-        scope = self.scope
-        param_name = match.group('param_name').strip()
-        param_desc = match.group('param_desc')
-        if not scope:
+        if not self.scope:
             raise Exception('Param out of scope.')
 
-        optional = True if match.group('optional') == 'optional' else False
-
-        self.current_endpoint[scope]['params'].append({'name': param_name,
-            'desc': param_desc, 'optional': optional})
+        self.current_endpoint[scope]['params'].append(
+            {'name': match.group('param_name').strip(),
+             'desc': match.group('param_desc'),
+             'optional': match.group('optional') == 'optional'})
 
     def _new_param_type(self, match):
         scope = self.scope
@@ -77,7 +69,7 @@ class Parser(object):
                 param['type'] = match.group('param_type_value')
                 found = True
 
-        if not (scope and (found)):
+        if not (scope and found):
             raise Exception('Invalid param name mentioned "%s".' % param_name)
 
     def _new_http_request_scope(self, match):
@@ -117,7 +109,7 @@ class Parser(object):
 
             # Strip the current line if we could not match.
             if not match:
-                string = re.sub(no_match_line, strip_junk, string,
+                string = re.sub(no_match_line, lambda _: '', string,
                                 count=1).lstrip()
 
         return True
