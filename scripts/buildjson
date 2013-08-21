@@ -19,10 +19,10 @@ for root, _, files in os.walk(sys.argv[1]):
             continue
 
         print 'parsing %s...' % f
-        fd = open(os.path.join(root, f), 'r')
-        parser = Parser(fd.read())
+        with open(os.path.join(root, f), 'r') as fd:
+            parser = Parser(fd.read())
         parser.parse()
         output.append({'api_name': f[:-4], 'endpoints': parser.get_array()})
 
 with open(os.path.join(media, 'out.json'), 'w') as fd:
-    fd.write(json.dumps({'api_list': output}))
+    json.dump({'api_list': output}, fd)
